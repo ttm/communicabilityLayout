@@ -1,15 +1,15 @@
 import numpy as n
 
 from scipy.linalg import expm
-from sklearn.manifold import MDS
+from sklearn.manifold import TSNE
 
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
 import matplotlib.pyplot as plt
 
 ################
 # settings:
-fname = 'dolphinsA.txt'
 fname = 'ZackarA.txt'
+fname = 'dolphinsA.txt'
 
 #  for communicability
 beta = 1  # temperature
@@ -20,7 +20,7 @@ min_angle = 1e-5  # minimum communicability angle
 # for MDS:
 dims = 3
 n_init = 30  # Number runs with different initialization
-max_iter = 1000  # max number of iterations in a single run
+max_iter = 30000  # max number of iterations in a single run
 n_jobs = -1  # use all processors
 # metrics = ['metricstress', 'metricsstress', 'sammon','strain'] dropped
 
@@ -45,10 +45,13 @@ An = n.real( n.maximum(An_, An_.T) ) # communicability angles matrix
 
 E_original = n.linalg.eigvals(An)
 
-embedding = MDS(n_components=dims, n_init=n_init, max_iter=max_iter, n_jobs=n_jobs, dissimilarity='precomputed')
+# embedding = MDS(n_components=dims, n_init=n_init, max_iter=max_iter, n_jobs=n_jobs, dissimilarity='precomputed')
+# 
+# p = positions = embedding.fit_transform(An)
+
+embedding = TSNE(n_components=dims, n_iter=max_iter, metric='precomputed', learning_rate=20, perplexity=5)
 
 p = positions = embedding.fit_transform(An)
-
 ###################
 # drawing
 ### matplotlib
