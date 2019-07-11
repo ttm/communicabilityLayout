@@ -1,0 +1,6 @@
+*.aux
+*.log
+*.out
+*.bst
+*.zip
+doc/readme.txt
