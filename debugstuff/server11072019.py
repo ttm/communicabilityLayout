@@ -2,46 +2,55 @@ import numpy as n, time as t
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.linalg import expm
-from sklearn.manifold import MDS, TSNE
+# https://scikit-learn.org/stable/modules/generated/sklearn.manifold.smacof.html
+# from sklearn.manifold import MDS
+from sklearn.manifold import smacof
+# http://lvdmaaten.github.io/publications/papers/JMLR_2014.pdf
+from MulticoreTSNE import MulticoreTSNE as TSNE
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
+import umap  # https://umap-learn.readthedocs.io/en/latest/
+# try megaman
 
 from aux import *
 
 ##################### settings ###################
 ### communicability calculations:
-__fname = '../data/Benguela_A.txt'
-__fname = '../data/polblogs_A_cc.txt'
 __fname = '../data/dolphinsA.txt'
+__fname = '../data/polblogs_A_cc.txt'
+__fname = '../data/Benguela_A.txt'
+__fname = '../data/YeastS_main.txt'
 __mangle = 10e-5
 __temp = 1
 
 ### dimensionality reduction:
 __dimred = 'ISOMAP'
 __dimred = 'ICA'
-__dimred = 'UMAP'
 # __dimred = 't-SNE'
-__dis = 'precomputed'
 __dis = 'euclidean'
-__dimred = 'PCA'  # implement, maybe also LDA or other methods
+__dis = 'precomputed'
 __dimred = 'MDS'
+__dimred = 'PCA'  # implement, maybe also LDA or other methods
+__dimred = 'UMAP'
 
 __dimredC = 'ISOMAP'
 __dimredC = 'ICA'
-__dimredC = 'UMAP'
 __dimredC = 't-SNE'
-__dimredC = 'PCA'  # implement, maybe also LDA or other methods
 __dimredC = 'MDS'
+__dimredC = 'PCA'  # implement, maybe also LDA or other methods
+__dimredC = 'UMAP'
 __dimC = 3
 
 __dim = 3
-__inits = 30  # for MDS ~3
 __inits = 3  # for MDS ~3
+__inits = 1  # for MDS ~3
+__inits = 30  # for MDS ~3
 __iters = 1000  # for MDS (~100) and t-SNE (~250)
-__iters = 100  # for MDS (~100) and t-SNE (~250)
+__iters = 1000  # for MDS (~100) and t-SNE (~250)
 __perplexity = 5  # for t-SNE
 __lrate = 12  # for t-SNE
+__nneigh = 3000  # for UMAP
 
 __cdmethod = 'an'  # angles
 # __cdmethod = 'dist'  # remove this option dist
@@ -88,12 +97,15 @@ tt = t.time()
 # E_original = n.linalg.eigvals(An)
 
 if __dimred == 'MDS':
-    embedding = MDS(n_components=__dim, n_init=__inits, max_iter=__iters, n_jobs=-1, dissimilarity=__dis)
-    p = positions = embedding.fit_transform(An)
+    # embedding = MDS(n_components=__dim, n_init=__inits, max_iter=__iters, n_jobs=-1, dissimilarity=__dis)
+    embedding = smacof(An)
     # foo = cmdscale(An)
     # p = foo[0][:,:3]
 elif __dimred == 'PCA':
     embedding = PCA(n_components= __dim)
+    p = positions = embedding.fit_transform(An)
+elif __dimred == 'UMAP':
+    embedding = umap.UMAP(n_neighbors=__nneigh, n_components=__dim, metric=__dis, min_dist=0)
     p = positions = embedding.fit_transform(An)
 else:
     embedding = TSNE(n_components=__dim, n_iter=__iters, metric='precomputed', learning_rate=__lrate, perplexity=__perplexity)

@@ -73,6 +73,10 @@ def cmdscale(D):
     e : (n,) array
         Eigenvalues of B.
 
+    Note
+    ----
+        http://www.nervouscomputer.com/hfs/cmdscale-in-python/
+
     """
     # Number of points
     n = len(D)
