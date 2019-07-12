@@ -21,20 +21,10 @@ __temp = 1
 __dimred = 'ISOMAP'
 __dimred = 'ICA'
 __dimred = 'UMAP'
+
 # __dimred = 't-SNE'
-__dis = 'precomputed'
-__dis = 'euclidean'
-__dimred = 'PCA'  # implement, maybe also LDA or other methods
 __dimred = 'MDS'
-
-__dimredC = 'ISOMAP'
-__dimredC = 'ICA'
-__dimredC = 'UMAP'
-__dimredC = 't-SNE'
-__dimredC = 'PCA'  # implement, maybe also LDA or other methods
-__dimredC = 'MDS'
-__dimC = 3
-
+__dimred = 'PCA'  # implement, maybe also LDA or other methods
 __dim = 3
 __inits = 30  # for MDS ~3
 __inits = 3  # for MDS ~3
@@ -51,7 +41,6 @@ __minclu = 2  # minimum number of clusters, not used for now
 __nclu = 6  # maximum number of clusters, not used for now
 __cddim = 'nd'  # the dimmensionality in which community detection is performed
 __cddim = 'rd'  # the dimmensionality in which community detection is performed
-__cddim = 3  # the dimmensionality in which community detection is performed
 
 ### plotting
 plot = True
@@ -88,16 +77,12 @@ tt = t.time()
 # E_original = n.linalg.eigvals(An)
 
 if __dimred == 'MDS':
-    embedding = MDS(n_components=__dim, n_init=__inits, max_iter=__iters, n_jobs=-1, dissimilarity=__dis)
-    p = positions = embedding.fit_transform(An)
-    # foo = cmdscale(An)
-    # p = foo[0][:,:3]
+    embedding = MDS(n_components=__dim, n_init=__inits, max_iter=__iters, n_jobs=-1, dissimilarity='precomputed')
 elif __dimred == 'PCA':
     embedding = PCA(n_components= __dim)
-    p = positions = embedding.fit_transform(An)
 else:
     embedding = TSNE(n_components=__dim, n_iter=__iters, metric='precomputed', learning_rate=__lrate, perplexity=__perplexity)
-    p = positions = embedding.fit_transform(An)
+p = positions = embedding.fit_transform(An)
 # p = positions = embedding.fit_transform(X)
 print('embedding', t.time() - tt)
 tt = t.time()
@@ -120,22 +105,19 @@ if __minclu == 1:
     km.append([0]*N)
 nclusts = list(range(__minclu, __nclu +1 ))
 
-if __cddim == N:
-    pC = An
-elif (__dimredC == __dimred) and (__dimC == __dim):
-    pC = p
-else:
-    pC = dimRed(An, __dimC, __dimredC)
-
-
+if __cdmethod == 'dist' and __cddim == 'rd':
+    X_ = embedding.fit_transform(X)
 for i in nclusts:
     # kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(p)
-    if __cddim == N:
+    if __cdmethod == 'an' and __cddim == 'nd':
         kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(An)
-    elif __cddim == __dim:
+    if __cdmethod == 'an' and __cddim == 'rd':
         kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(p)
-    else:
-        kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(X_)
+    if __cdmethod == 'dist':
+        if __cddim == 'nd':
+            kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(X)
+        if __cddim == 'rd':
+            kmeans = KMeans(n_clusters=i, n_init=100, max_iter=3000, n_jobs=-1, tol=1e-6).fit(X_)
     km.append([int(j) for j in kmeans.labels_])
     score = silhouette_score(p, kmeans.labels_)
     ev.append(score)

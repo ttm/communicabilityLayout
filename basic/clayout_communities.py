@@ -8,11 +8,11 @@ import matplotlib.pyplot as plt
 
 ################
 # settings:
-fname = 'ZackarA.txt'
-fname = 'dolphinsA.txt'
-fname = 'Roget_main_A.txt'
-fname = 'YeastS_main.txt'
-fname = 'neurons_A.txt'
+fname = '../data/ZackarA.txt'
+fname = '../data/dolphinsA.txt'
+fname = '../data/Roget_main_A.txt'
+fname = '../data/YeastS_main.txt'
+fname = '../data/neurons_A.txt'
 
 # for communicability
 beta = 1  # temperature
