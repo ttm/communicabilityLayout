@@ -6,24 +6,25 @@ from scipy.linalg import expm
 from sklearn.manifold import MDS, Isomap, LocallyLinearEmbedding
 # http://lvdmaaten.github.io/publications/papers/JMLR_2014.pdf
 from MulticoreTSNE import MulticoreTSNE as TSNE
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN, SpectralClustering, AffinityPropagation
-from sklearn.metrics import silhouette_score
 from sklearn.decomposition import PCA
 import umap  # https://umap-learn.readthedocs.io/en/latest/
+from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN, SpectralClustering, AffinityPropagation
+from sklearn.metrics import silhouette_score
 # try megaman
 
 from aux import *
-def decompose(dimred, dim):
+def decompose(dimred, dim, nneigh):
     if dimred == 'MDS': # slowest!
         embedding = MDS(n_components=dim, n_init=__inits, max_iter=__iters, n_jobs=-1, dissimilarity=__dis)
     elif dimred == 'ISOMAP': # slow
-        embedding = Isomap(n_neighbors=__nneigh, n_components=dim, n_jobs=-1)
+        embedding = Isomap(n_neighbors=nneigh, n_components=dim, n_jobs=-1)
     elif dimred == 'LLE': # slow-acceptable
-        embedding = LocallyLinearEmbedding(n_neighbors=__nneigh, n_components=dim, n_jobs=-1)
+        embedding = LocallyLinearEmbedding(n_neighbors=nneigh, n_components=dim, n_jobs=-1)
     elif dimred == 'TSNE': # acceptable
         embedding = TSNE(n_components=dim, n_iter=__iters, metric='precomputed', learning_rate=__lrate, perplexity=__perplexity)
     elif dimred == 'UMAP': # fast
-        embedding = umap.UMAP(n_neighbors=__nneigh, n_components=dim, metric=__dis, min_dist=0.1)
+        # embedding = umap.UMAP(n_neighbors=nneigh, n_components=dim, metric=__dis, min_dist=0.1)
+        embedding = umap.UMAP(n_neighbors=nneigh, n_components=dim, min_dist=0.1)
     elif dimred == 'PCA': # fastest!
         embedding = PCA(n_components=dim)
     else:
@@ -33,14 +34,14 @@ def decompose(dimred, dim):
     return positions
 
 def clust(clu, i):
-    if clu == 'KM':
+    if clu == 'KM': # very large
         calg = KMeans(n_clusters=i, n_init=100,n_jobs=-1)
-    elif clu == 'AG':
+    elif clu == 'AG': # large
         calg = AgglomerativeClustering(n_clusters=i)
-    elif clu == 'SP':
+    elif clu == 'SP': # medium
         # calg = SpectralClustering(n_clusters=i, affinity='precomputed', n_jobs=-1)
         calg = SpectralClustering(n_clusters=i, n_jobs=-1)
-    elif clu == 'AF':
+    elif clu == 'AF': # not scalable
         # calg = AffinityPropagation(n_clusters=i, affinity='precomputed', n_jobs=-1)
         calg = AffinityPropagation()
     else:
@@ -50,10 +51,10 @@ def clust(clu, i):
 
 ##################### settings ###################
 ### communicability calculations:
-__fname = '../data/dolphinsA.txt'
 __fname = '../data/polblogs_A_cc.txt'
 __fname = '../data/Benguela_A.txt'
 __fname = '../data/YeastS_main.txt'
+__fname = '../data/dolphinsA.txt'
 __mangle = 10e-5
 __temp = 1
 
@@ -61,20 +62,20 @@ __temp = 1
 __dis = 'euclidean'
 __dis = 'precomputed'
 # __dimred = 't-SNE'
-__dimred = 'UMAP'
 __dimred = 'ISOMAP'
 __dimred = 'MDS'
 __dimred = 'TSNE'
 __dimred = 'PCA'  # implement, maybe also LDA or other methods
+__dimred = 'UMAP'
 __dim = 3
 
 __dimredC = 'TSNE'
 __dimredC = 'MDS'
-__dimredC = 'UMAP'
 __dimredC = 'ISOMAP'
 __dimredC = 'TSNE'
+__dimredC = 'UMAP'
 __dimredC = 'PCA'  # implement, maybe also LDA or other methods
-__dimC = 5
+__dimC = 3
 
 __inits = 3  # for MDS ~3
 __inits = 1  # for MDS ~3
@@ -84,6 +85,7 @@ __iters = 1000  # for MDS (~100) and t-SNE (~250)
 __perplexity = 5  # for t-SNE
 __lrate = 12  # for t-SNE
 __nneigh = 300  # for UMAP
+__nneighC = 23  # for UMAP
 
 __cdmethod = 'an'  # angles
 # __cdmethod = 'dist'  # remove this option dist
@@ -133,7 +135,7 @@ tt = t.time()
 
 # E_original = n.linalg.eigvals(An)
 
-p = decompose(__dimred, __dim)
+p = decompose(__dimred, __dim, __nneigh)
 print('embedding', t.time() - tt)
 tt = t.time()
 
@@ -147,12 +149,12 @@ print('sphere', t.time() - tt)
 tt = t.time()
 
 # detecting communities
-if __cddim == N:
+if __dimC == N:
     pC = An
 elif (__dimredC == __dimred) and (__dimC == __dim):
     pC = p
 else:
-    pC = decompose(__dimredC, __dimC)
+    pC = decompose(__dimredC, __dimC, __nneighC)
     print('second embedding', t.time() - tt)
     tt = t.time()
 
@@ -168,7 +170,7 @@ nclusts = list(range(__minclu, __nclu +1 ))
 # Hierarchical clustering Ward
 # DBSCAN
 # Spectral Clustering
-if __clu in ('AF', 'DB'):
+if __clu == 'AF':
     labels = clust(__clu, 0)
     km.append(labels)
     ev.append(1)
