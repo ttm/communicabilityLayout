@@ -161,3 +161,19 @@ def give_coords(distances):
         X[point2,:point2] = sympy.solve(expressions, list(X[point2,:point2]))[1]
 
     return X
+
+from scipy import spatial
+x = n.array([ [1,2,3], [5,6,7], [9,8,7] ])
+d = spatial.distance_matrix(x, x)
+def give_coords2(D):
+    # https://math.stackexchange.com/questions/156161/finding-the-coordinates-of-points-from-distance-matrix/423898#423898
+    N = D.shape[0]
+    Dr1 = D[0,:]
+    Dr1_ = n.repeat(Dr1[:, n.newaxis], N, axis=1).T
+    Dc1 = D[:,0]
+    Dc1_ = n.repeat(Dc1[:, n.newaxis], N, axis=1)
+    M = (Dr1_**2 + Dc1_**2 - D**2) / 2
+    eva, eve = n.linalg.eig(M)
+    points = eve * (eva**0.5)
+    return points, eva, eve
+

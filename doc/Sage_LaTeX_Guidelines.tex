@@ -1,6 +1,6 @@
 % sage_latex_guidelines.tex V1.20, 14 January 2017
 
-\documentclass[Afour,sageh,times]{sagej}
+\documentclass[Afour,sagev,times]{sagej}
 
 \usepackage{moreverb,url}
 
@@ -43,34 +43,158 @@ This paper describes the use of the communicability measure for the achievement
 
 \section{Introduction}
 \subsection{Related work}
-\section{The communicability framework}
+\section{The communicability framework}\label{sfra}
 \subsection{Preliminaries}
 \subsection{Layouts}
 \subsection{Community detection}
 \section{Results}
-\subsection{An interactive interface}
+\subsection{An interactive interface}\label{sint}
+We implemented the framework described in the previous section using scientific,
+database and web resources, making it available within a web page
+for use through simple mouse-driven actions and requiring no software installation beyond a web browser. % such as Firefox or Google Chrome.
+The software has been named ComNetVis (from Communicability-based Network Visualization)
+and is exemplified in Figures~\ref{fpage0},~\ref{finitial} and~\ref{secondPhase}.
+In the following subsections we describe its functionalities and the underlying technologies.
+
+\begin{figure*}\centering
+ \includegraphics[width=\textwidth]{figs/overall}
+  \caption{The ComNetVis interface: 
+  (1) drop-down menu for selecting or uploading a network for analysis;
+  (2) widgets for setting the communicability calculations;
+  (3) widgets for setting the community detection;
+  (4) widgets for setting the node-link layout;
+  (5) the render button to display the network;
+  (6) toolbar with controls for navigation of the network and fine-tuning the visualization;
+  (7) interactive table holding information about the communities;
+  can also be used to set the visualization on the canvas;
+  (8) canvas with the node-link representation of the network.
+  (9) text areas for further information about the visualization achieved.
+  Notice that nodes shown belong to six communities, each with the color and size denoted in the table (7).
+  These elements are further described in this section.
+  }\label{fpage0}
+\end{figure*}
+
+\subsection{Using ComNetVis}\label{suse}
+In using ComNetVis, the analyst first uses a drop-down menu to select
+a network of interest, s/he may also upload a new network using the same menu.
+Then, s/he sets the paramenters for the calculation of the communicabiity angles, as illustrated in Figure~\ref{finitial}, although default settings are reasonable, specially for a newcomer.
+The next step is to set the community detection algorithm.
+To do so, the user selects a dimmensionality reduction method, and a target dimmensionality in which clustering is going to be performed.
+Accordingly, s/he selects a clustering algorithm and the minimum and maximum number of communities of interest, as illustrated in Figure~\ref{fcom}.
+The last step is to set the node-link layout algorithm:
+the user selects a dimmensionality reduction method,
+and the number of dimensions of the layout,
+as illustrated in Figure~\ref{flay}.
+
+Theoretically,
+any dimensionality reduction method
+and any clustering algorithm
+can be used.
+In this interface, to encompass a reasonable collection of techniques,
+and enable the proof-of-concept,
+we implemented five dimmensionality reduction methods
+(PCA~\cite{pca}, t-SNE~\cite{tsne}, Locally Linear Embedding~\cite{lle},
+ISOMAP~\cite{isomap}, and MDS~\cite{mds}),
+and three clustering algorithms (k-means,
+Ward's hierarchical~\cite{ward}, and spectral~\cite{spectral}).
+
+
+
+\begin{figure}\centering
+ \includegraphics[width=\columnwidth]{figs/initial}
+  \caption{The initial step of the ComNetVis usage is to apply the communicability calculation to an input network.
+  The button at the top is for network uploading and selection.
+  In the gray box, the user chooses the inverse temperature and the minimum angle.
+  }\label{finitial}
+\end{figure}
+
+
+\begin{figure}\centering
+ \includegraphics[width=\columnwidth]{figs/com}
+  \caption{
+    Settings of the community detection: the dimensionality reduction method;
+    the target dimensionality in which the communities are going to be found;
+    the clustering algorithm;
+    and the minimum and maximum number of communities.
+  }\label{fcom}
+\end{figure}
+
+\begin{figure}\centering
+ \includegraphics[width=\columnwidth]{figs/lay}
+  \caption{
+    Settings of the layout: the dimensionality reduction method and
+    the number of dimensions of the layout, which can be 2 or 3.
+  }\label{flay}
+\end{figure}
+
+Once the ``render network'' button is hit, the network node-link representation is mapped to the screen according to the selected settings.
+Subsequent usage relies on manipulation of the visual mapping controls presented on the
+canvas by means of user actions and related mouse operations.
+These steps are illustrated in Figure~\ref{fsecond}.
+
+\begin{figure*}\centering
+ \includegraphics[width=\textwidth]{figs/second}
+  \caption{
+    Second phase of ComNetVis usage: with the network is mapped to the canvas.
+    The networks can be rotated or translated by click and drag or Ctrl-click and drag, respectively, in the canvas.
+    The toolbar, above the canvas, holds three sets of buttons.
+    The first set of buttons, which are at the left, enables:
+    increase/decrease of node size;
+    emphasize node size proportionality to degree;
+    reset node proportionality;
+    increase/decrease node transparency; and
+    increase/decrease link transparency.
+    The middle set of buttons, enables:
+    show/hide centroid;
+    show/hide best sphere center;
+    show/hide best sphere surface; and
+    recover initial position.
+    The last set of buttons enables:
+    save image; and
+    download communities as a CSV file.
+    The table, to the right, allows the analyst to change the number of communities associated to the network, and to change the color of the community, by
+    clicking on the columns ``Show'' and ``Hue'', respectivelly.
+    The ``Size'' of each community changes in the table when the user changes the number of communities to be mapped to the screen.
+    The ``Silhouette'' score is a measure of how consistent are the clusters:
+    higher values are associated to better clusters.
+  }\label{fsecond}
+\end{figure*}
+
+\subsection{Underlying software technologies}
+% coarsening algorithms
+% flask for server, feather for auxiliary server
+% mongodb filesystem for data
+% Nuxt/Vue.js for the frontend with heavy use of PIXI.js
+Components of ComNetVis are mostly written in a combination of JavaScript and Python: it uses Vue.js (set up by Nuxt.js) in the front-end client, the back-end is a Flask Python server, used to perform specialized or heavy calculations.
+A secondary server, a FeatherJS, is used to facilitate contact with the database and real-time multi-user interaction.
+The data is stored in a MongoDB database and ordinarily,
+while the multi-user interaction is deactivated for now to avoid unnecessary complexity.
+The communicability-related calculations for community detection and network layout are performed by the Flask server.
+The fast WebGL 3D rendering on the canvas is performed using Babylon.js.
+
 \subsection{Use cases}
 
 \section{Conclusions and further work}
 \begin{acks}
-This class file was developed by Sunrise Setting Ltd,
-Brixham, Devon, UK.\\
-Website: \url{http://www.sunrise-setting.co.uk}
+The authors acknowledge the financial support of the S\~ao Paulo State Research Foundation (FAPESP grant 2017/05838-3).
+The views expressed do not reflect the official policy or position of FAPESP or CNPq.
 \end{acks}
 
-\begin{thebibliography}{99}
-\bibitem[Kopka and Daly(2003)]{R1}
-Kopka~H and Daly~PW (2003) \textit{A Guide to \LaTeX}, 4th~edn.
-Addison-Wesley.
+\bibliographystyle{SageV}
+\bibliography{mbib}
+% \begin{thebibliography}{99}
+% \bibitem[Kopka and Daly(2003)]{R1}
+% Kopka~H and Daly~PW (2003) \textit{A Guide to \LaTeX}, 4th~edn.
+% Addison-Wesley.
+% 
+% \bibitem[Lamport(1994)]{R2}
+% Lamport~L (1994) \textit{\LaTeX: a Document Preparation System},
+% 2nd~edn. Addison-Wesley.
+% 
+% \bibitem[Mittelbach and Goossens(2004)]{R3}
+% Mittelbach~F and Goossens~M (2004) \textit{The \LaTeX\ Companion},
+% 2nd~edn. Addison-Wesley.
 
-\bibitem[Lamport(1994)]{R2}
-Lamport~L (1994) \textit{\LaTeX: a Document Preparation System},
-2nd~edn. Addison-Wesley.
-
-\bibitem[Mittelbach and Goossens(2004)]{R3}
-Mittelbach~F and Goossens~M (2004) \textit{The \LaTeX\ Companion},
-2nd~edn. Addison-Wesley.
-
-\end{thebibliography}
+% \end{thebibliography}
 
 \end{document}
