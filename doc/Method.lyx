@@ -1,0 +1,1399 @@
+#LyX file created by tex2lyx 2.2
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin /home/renato/repos/communicabilityLayout/doc/
+\textclass amsart
+\begin_preamble
+\usepackage{babel}
+
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding iso8859-15
+\fontencoding T1
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Euclidean hyperspherical embedding of networks
+\end_layout
+
+\begin_layout Standard
+In this work we consider undirected connected simple graphs 
+\begin_inset Formula $\Gamma=\left(V,E\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $V$
+\end_inset
+
+ is the set of vertices or nodes and 
+\begin_inset Formula $E$
+\end_inset
+
+is the set of edges. Let 
+\begin_inset Formula $A=A\left(\Gamma\right)=\left[A_{ij}\right]_{n\times n}$
+\end_inset
+
+ be the adjacency matrix of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+. Because the graphs considered here are undirected the associated adjacency matrix is symmetric, and its eigenvalues are real. We label the eigenvalues of 
+\begin_inset Formula $A$
+\end_inset
+
+ in non-increasing order: 
+\begin_inset Formula $\lambda_{1}>\lambda_{2}\geq\ldots\geq\lambda_{n}$
+\end_inset
+
+. Since 
+\begin_inset Formula $A$
+\end_inset
+
+ is a real-valued, symmetric matrix, we can decompose 
+\begin_inset Formula $A$
+\end_inset
+
+ into 
+\begin_inset Formula $A=U\Lambda U^{T}$
+\end_inset
+
+, where 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ is a diagonal matrix containing the eigenvalues of 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $U=[\mathbf{\overrightarrow{\psi}}_{1},\ldots,\mathbf{\overrightarrow{\psi}}_{n}]$
+\end_inset
+
+ is orthogonal, where 
+\begin_inset Formula $\mathbf{\overrightarrow{\psi}}_{i}$
+\end_inset
+
+ is an eigenvector associated with 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+. We denote by 
+\begin_inset Formula $\mathbf{\mathbf{\psi}}_{j,u}$
+\end_inset
+
+ the 
+\begin_inset Formula $u$
+\end_inset
+
+th entry of the 
+\begin_inset Formula $j$
+\end_inset
+
+ th eigenvector of 
+\begin_inset Formula $A$
+\end_inset
+
+. A row of the matrix 
+\begin_inset Formula $U$
+\end_inset
+
+ corresponding to the node 
+\begin_inset Formula $i$
+\end_inset
+
+ of the graph is designated here by the vector 
+\begin_inset Formula $\vec{\varphi}_{i}=\left[\mathbf{\mathbf{\psi}}_{1,i},\ldots\mathbf{\mathbf{\psi}}_{n,i}\right]^{T}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+An important quantity for studying communication processes in networks is the so-called communicability function 
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "Communicability,Estrada_Higham,Estrada_Hatano_Benzi"
+
+\end_inset
+
+, which is defined as follows. 
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ be two nodes of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, then the communicability function between these two nodes is
+\end_layout
+
+\begin_layout Definition
+
+\begin_inset Formula \begin{equation}
+G_{uv}=\sum_{k=0}^{\infty}\frac{\left(A^{k}\right)_{uv}}{k!}=\left(\exp\left(A\right)\right)_{uv}=\sum_{k=1}^{n}e^{\lambda_{k}}\mathbf{\mathbf{\psi}}_{k,u}\mathbf{\psi}_{k,v}.
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It counts the total number of walks starting at node 
+\begin_inset Formula $u$
+\end_inset
+
+ and ending at node 
+\begin_inset Formula $v$
+\end_inset
+
+, weighted in decreasing order of their length by a factor 
+\begin_inset Formula $\frac{1}{k!}$
+\end_inset
+
+. That is, the communicability function considers shorter walks more influential than longer ones and penalize them appropriately such that the whole series converges. The 
+\begin_inset Formula $G_{uu}$
+\end_inset
+
+ terms of the communicability function characterize the degree of participation of a node in all subgraphs of the network, giving more weight to the smaller ones. Thus, it is known as the subgraph centrality of the corresponding node 
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "Subgraph_Centrality"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us now define a parameter that account for the difference between the number of weighted closed walks that start at (and return to) the corresponding nodes 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+, and the number of weighted walks that start at node 
+\begin_inset Formula $u$
+\end_inset
+
+ (respectively 
+\begin_inset Formula $v)$
+\end_inset
+
+ and ends at the node 
+\begin_inset Formula $v$
+\end_inset
+
+ (respectively 
+\begin_inset Formula $u).$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ be two nodes of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, then 
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\xi_{uv}^{2}=G_{uu}+G_{vv}-2G_{uv}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This difference, which is defined below as 
+\begin_inset Formula $\xi_{uv}^{2}$
+\end_inset
+
+ serves as a quantification of the potential quality of communication channels between two nodes. That is, if there are many routes that connect nodes 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ together, and there are not many routes that starting at the node 
+\begin_inset Formula $u$
+\end_inset
+
+ (respectively 
+\begin_inset Formula $v)$
+\end_inset
+
+ return to it, we can say that most of 
+\begin_inset Quotes eld
+\end_inset
+
+information
+\begin_inset Quotes erd
+\end_inset
+
+ departing the node 
+\begin_inset Formula $u$
+\end_inset
+
+ (respectively 
+\begin_inset Formula $v)$
+\end_inset
+
+ with destination to the node 
+\begin_inset Formula $v$
+\end_inset
+
+ (respectively 
+\begin_inset Formula $u)$
+\end_inset
+
+ will arrive at it. Thus, there is a potential good quality of communication between these two nodes. The other way around is very clear as if there are many returning routes to the nodes and very few connecting them, most of the information departing one node will hardly arrive at the other. In a similar way we can define the ratio between the communicability between the two nodes and the product of the self-communicabilities of both nodes. 
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ be two nodes of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, then 
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\gamma_{uv}=\dfrac{G_{uv}}{\sqrt{G_{uu}G_{vv}}}.\label{eq:comm_angle}
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, we have proved the following result. 
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ be two nodes of 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+, and let 
+\begin_inset Formula $\xi_{uv}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{uv}$
+\end_inset
+
+ the parameters defined before. Then, 
+\begin_inset Formula $\xi_{uv}^{2}$
+\end_inset
+
+ is a square Euclidean distance between the two nodes and 
+\begin_inset Formula $\theta_{uv}=\cos^{-1}\gamma_{uv}$
+\end_inset
+
+ is the Euclidean angle spanned between the positions vectors of the two nodes in a Euclidean space. 
+\end_layout
+
+\begin_layout Standard
+Althought we are not proving the result here we sketch the procedure of its proof. The matrix 
+\begin_inset Formula $G=\exp\left(A\right)$
+\end_inset
+
+ is positive define, and so we can express it as a Gram matrix of the form
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+G=X^{T}X,
+\end{equation}
+\end_inset
+
+where 
+\begin_inset Formula $X=\left[\vec{x}_{1},\ldots,\vec{x}_{n}\right]$
+\end_inset
+
+ and
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\vec{x}_{u}=\exp\left(\varLambda/2\right)\vec{\varphi}_{u},
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then, it is straightforward to realize that
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\begin{array}{lll}
+\vec{x}_{u}\cdot\vec{x}_{u} & =\left(\exp\left(\varLambda/2\right)\vec{\varphi}_{u}\right)^{T}\exp\left(\varLambda/2\right)\vec{\varphi}_{v}\\
+ & =\vec{\varphi}_{u}^{T}\exp\left(\varLambda/2\right)\exp\left(\varLambda/2\right)\vec{\varphi}_{v}\\
+ & =\vec{\varphi}_{u}^{T}\exp\left(\varLambda\right)\vec{\varphi}_{v}\\
+ & =\sum_{k=1}^{n}e^{\lambda_{k}}\mathbf{\mathbf{\psi}}_{k,u}\mathbf{\psi}_{k,v}\\
+ & =G_{uv.}
+\end{array}
+\end{equation}
+\end_inset
+
+Then, we can express 
+\begin_inset Formula $\xi_{uv}^{2}$
+\end_inset
+
+ in terms of the vectors 
+\begin_inset Formula $\vec{x}_{u}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{x}_{v}$
+\end_inset
+
+ as 
+\begin_inset Formula \begin{equation}
+\begin{array}{ll}
+\xi_{uv}^{2} & =\vec{x}_{u}\cdot\vec{x}_{u}+\vec{x}_{v}\cdot\vec{x}_{v}-2\vec{x}_{u}\cdot\vec{x}_{v}\\
+ & =\left\Vert \vec{x}_{u}-\vec{x}_{v}\right\Vert ^{2},
+\end{array}
+\end{equation}
+\end_inset
+
+which means that 
+\begin_inset Formula $\xi_{uv}^{2}$
+\end_inset
+
+ is a Euclidean distance (metric) between the corresponding nodes and that 
+\begin_inset Formula $\vec{x}_{u}$
+\end_inset
+
+ is the position vector of the corresponding node in such Euclidean space. It is now obvious that
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Formula \begin{equation}
+\cos\theta_{uv}=\dfrac{\vec{x}_{u}\cdot\vec{x}_{v}}{\left\Vert \vec{x}_{u}\right\Vert \left\Vert \vec{x}_{v}\right\Vert }=\dfrac{G_{uv}}{\sqrt{G_{uu}G_{vv}}}=\gamma_{uv}.
+\end{equation}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is important to remark here that the embedding induced by the communicability function is in a Euclidean hypersphere as proved in the following result. 
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ be a simple connected graph. Then, 
+\begin_inset Formula $\vec{x}_{u}$
+\end_inset
+
+ is a vector pointing from the origin of an 
+\begin_inset Formula $\left(n-1\right)$
+\end_inset
+
+-sphere to its surface where the node 
+\begin_inset Formula $u$
+\end_inset
+
+ is located. The radius of this hypersphere is given by 
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "Angles"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+
+\begin_inset Formula \begin{equation}
+R^{2}=\frac{1}{4}\left(c-\frac{\left(2-b\right)^{2}}{a}\right),
+\end{equation}
+\end_inset
+
+where 
+\begin_inset Formula $a=\vec{1}^{T}\exp\left(-A\right)\vec{1}$
+\end_inset
+
+, 
+\begin_inset Formula $b=\vec{s}^{T}\exp\left(-A\right)\vec{1}$
+\end_inset
+
+, 
+\begin_inset Formula $c=\vec{s}^{T}\exp\left(-A\right)\vec{s}$
+\end_inset
+
+, and 
+\begin_inset Formula $\vec{s}={\rm diag}(\exp\left(A\right))$
+\end_inset
+
+. 
+\end_layout
+
+\begin_layout Standard
+This means that the communicability function induces an embedding of every connected simple graph of 
+\begin_inset Formula $n$
+\end_inset
+
+ nodes into the surface of a Euclidean 
+\begin_inset Formula $\left(n-1\right)$
+\end_inset
+
+-sphere. The case of two graphs with 3 nodes is illustrated in Fig. XX.
+\end_layout
+
+\begin_layout Section
+The problem of visualization
+\end_layout
+
+\begin_layout Standard
+We implemented the framework described in the previous section using scientific, database and web resources, making it available within a web page
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+endnote
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+Available at: 
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+http://rfabbri.vicg.icmc.usp.br:3000/communicability
+\end_layout
+
+\end_inset
+
+.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+ for use through simple mouse-driven actions and requiring no software installation beyond a web browser. 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% such as Firefox or Google Chrome.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+The software has been named ComNetVis (from Communicability-based Network Visualization) and is exemplified in Figures
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fpage0"
+
+\end_inset
+
+,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "finitial"
+
+\end_inset
+
+,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fcom"
+
+\end_inset
+
+,
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "flay"
+
+\end_inset
+
+, and
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fsecond"
+
+\end_inset
+
+. In this section we describe its functionalities and the underlying technologies.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide true
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figs/overall.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The ComNetVis interface: (1) drop-down menu for selecting or uploading a network for analysis; (2) widgets for setting the communicability calculations; (3) widgets for setting the community detection; (4) widgets for setting the node-link layout; (5) the render button to display the network; (6) toolbar with controls for fine-tuning the visualization and downloading the image and communities; (7) interactive table holding information about the communities; can also be used to set the visualization on the canvas; (8) canvas with the node-link representation of the network. (9) text areas for further information about the visualization achieved. Notice that nodes shown belong to six communities, each with the color and size denoted in the table (7). These elements are further described in this section. 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fpage0"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In using ComNetVis, the analyst first uses a drop-down menu to select a network of interest, s/he may also upload a new network using the same menu. Then s/he sets parameters for the calculation of the communicability angles, as illustrated in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "finitial"
+
+\end_inset
+
+, although default settings are reasonable, specially for a newcomer. The next step is to set the community detection algorithm. To do so, the user selects a dimensionality reduction method, and a target dimensionality in which clustering is going to be performed. Accordingly, s/he selects a clustering algorithm and the minimum and maximum number of communities of interest, as illustrated in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fcom"
+
+\end_inset
+
+. The last step, before the achievement of the visual mapping, is to set the node-link layout algorithm: the user selects a dimensionality reduction method, and the number of dimensions of the layout, as illustrated in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "flay"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Theoretically, any dimensionality reduction method and any clustering algorithm can be used. In this interface, to encompass a reasonable collection of techniques, and enable the proof-of-concept, we implemented five dimensionality reduction methods (PCA
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "pca"
+
+\end_inset
+
+, t-SNE
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "tsne"
+
+\end_inset
+
+, Locally Linear Embedding
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "lle"
+
+\end_inset
+
+, ISOMAP
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "isomap"
+
+\end_inset
+
+, and MDS
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "mds"
+
+\end_inset
+
+), and three clustering algorithms (k-means, Ward's hierarchical
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "ward"
+
+\end_inset
+
+, and spectral
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand citet
+after ""
+before ""
+key "spectral"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figs/initial.png
+	width 100col%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The initial step of the ComNetVis usage is to apply the communicability calculation to an input network. The button at the top is for network uploading and selection. In the gray box the user chooses the inverse temperature and the minimum angle. 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "finitial"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figs/com.png
+	width 100col%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ Settings of the community detection: the dimensionality reduction method; the target dimensionality in which the communities are going to be found; the clustering algorithm; and the minimum and maximum number of communities. 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fcom"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figs/lay.png
+	width 100col%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ Settings of the layout: the dimensionality reduction method and the number of dimensions of the layout, which can be 2 or 3. 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "flay"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Once the 
+\begin_inset Quotes eld
+\end_inset
+
+render network
+\begin_inset Quotes erd
+\end_inset
+
+ button is hit, the network node-link representation is mapped to the screen according to the selected settings. Subsequent usage relies on manipulation of the visual mapping, using control elements presented with the canvas, by means of mouse operations. These procedures are illustrated in Figure
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fsecond"
+
+\end_inset
+
+: changing overall node size or proportionality to degree; changing node and link transparency; visualization of the centroid and best sphere center and surface; download of image and of communities; changing the colors and the number of communities.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset Float figure
+wide true
+sideways false
+status open
+
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics 
+	filename figs/second.png
+	width 100text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+ Second phase of ComNetVis usage which takes place with the network mapped to the canvas. The network can be rotated or translated by click and drag or Ctrl-click and drag, respectively, in the canvas. The toolbar, above the canvas, holds three sets of buttons. The first set of buttons, at the left, enables: increase/decrease of node size; emphasize node size proportionality to degree; reset node proportionality; increase/decrease node transparency; and increase/decrease link transparency. The middle set of buttons enables: show/hide centroid; show/hide best sphere center; show/hide best sphere surface; and recover initial position. The last set of buttons enables: save image; and download communities as a CSV file. The table, to the right, allows the analyst to change the number of communities associated to the network, and to change the color of the community, by clicking on the columns 
+\begin_inset Quotes eld
+\end_inset
+
+Show
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Hue
+\begin_inset Quotes erd
+\end_inset
+
+, respectively. The 
+\begin_inset Quotes eld
+\end_inset
+
+Size
+\begin_inset Quotes erd
+\end_inset
+
+ of each community changes in the table when the user changes the number of communities. The 
+\begin_inset Quotes eld
+\end_inset
+
+Silhouette
+\begin_inset Quotes erd
+\end_inset
+
+ score is a measure of how consistent are the clusters: higher values are associated to better clusters. 
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fsecond"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Underlying software technologies:
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% coarsening algorithms
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% flask for server, feather for auxiliary server
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% mongodb filesystem for data
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% Nuxt/Vue.js for the frontend with heavy use of PIXI.js
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Components of ComNetVis are written in a combination of JavaScript and Python: Vue.js (set up by Nuxt.js) is used for the front-end client, the back-end is a Flask Python server, used to perform specialized or heavy calculations. A secondary server, a FeatherJS, is used to facilitate database-related operations and real-time multi-user interaction. The data is stored in a MongoDB database, while the multi-user interaction is deactivated for now to avoid unnecessary complexity. The communicability-related calculations for community detection and network layout are performed by the Flask server. The fast WebGL 3D rendering on the canvas is performed using Babylon.js.
+\end_layout
+
+\begin_layout Subsection
+Use cases
+\end_layout
+
+\begin_layout Section
+Conclusions and further work
+\end_layout
+
+\begin_layout Subsection*
+Acknowledgement
+\end_layout
+
+\begin_layout Standard
+The authors acknowledge the financial support of the São Paulo State Research Foundation (FAPESP grant 2017/05838-3). The views expressed do not reflect the official policy or position of FAPESP or CNPq.
+\end_layout
+
+\begin_layout Standard
+\start_of_appendix
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+%dummy comment inserted by tex2lyx to ensure that this paragraph is not empty
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ranking of the algorithms by computational cost
+\end_layout
+
+\begin_layout Standard
+The dimensionality reduction methods, listed from slowest to fastest, are: MDS, Isomap, Locally Linear Embedding, t-SNE, and PCA. By far, PCA is the fastest of these methods
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+endnote
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+As described in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+https://umap-learn.readthedocs.io/en/latest/benchmarking.html
+\end_layout
+
+\end_inset
+
+.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% put UMAP on the methods again?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The clustering methods, listed from the one that scales worst to best: spectral, Ward's hierarchical, k-means
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\backslash
+endnote
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+{
+\end_layout
+
+\end_inset
+
+As described in
+\begin_inset space ~
+
+\end_inset
+
+
+\begin_inset Flex Flex:URL
+status collapsed
+
+\begin_layout Plain Layout
+https://scikit-learn.org/stable/modules/clustering.html
+\backslash
+#clustering
+\end_layout
+
+\end_inset
+
+.
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+% 
+\backslash
+theendnotes
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "mbib"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
